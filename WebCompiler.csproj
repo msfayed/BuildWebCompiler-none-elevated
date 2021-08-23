@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{7AC58B60-E066-4F58-8ACB-0662E92B0C05}</ProjectGuid>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Exe</OutputType>
+    <LangVersion>6</LangVersion>
+    <AssemblyName>WebCompiler</AssemblyName>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dependences\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NUglify, Version=1.5.12.0, Culture=neutral, PublicKeyToken=15bc7810aec21b5e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dependences\NUglify.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.Build.Utilities.Core" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebCompiler\BabelCompiler.cs" />
+    <Compile Include="WebCompiler\BabelOptions.cs" />
+    <Compile Include="WebCompiler\BaseMinifyOptions.cs" />
+    <Compile Include="WebCompiler\BaseOptions.cs" />
+    <Compile Include="WebCompiler\CompileFileEventArgs.cs" />
+    <Compile Include="WebCompiler\CompilerBuildTask.cs" />
+    <Compile Include="WebCompiler\CompilerCleanTask.cs" />
+    <Compile Include="WebCompiler\CompilerError.cs" />
+    <Compile Include="WebCompiler\CompilerResult.cs" />
+    <Compile Include="WebCompiler\CompilerService.cs" />
+    <Compile Include="WebCompiler\Config.cs" />
+    <Compile Include="WebCompiler\ConfigFileProcessor.cs" />
+    <Compile Include="WebCompiler\ConfigHandler.cs" />
+    <Compile Include="WebCompiler\ConfigProcessedEventArgs.cs" />
+    <Compile Include="WebCompiler\CssOptions.cs" />
+    <Compile Include="WebCompiler\CssRelativePath.cs" />
+    <Compile Include="WebCompiler\Dependencies.cs" />
+    <Compile Include="WebCompiler\DependencyResolverBase.cs" />
+    <Compile Include="WebCompiler\DependencyService.cs" />
+    <Compile Include="WebCompiler\FileHelpers.cs" />
+    <Compile Include="WebCompiler\FileMinifier.cs" />
+    <Compile Include="WebCompiler\HandlebarsCompiler.cs" />
+    <Compile Include="WebCompiler\HandlebarsOptions.cs" />
+    <Compile Include="WebCompiler\IcedCoffeeScriptCompiler.cs" />
+    <Compile Include="WebCompiler\IcedCoffeeScriptOptions.cs" />
+    <Compile Include="WebCompiler\ICompiler.cs" />
+    <Compile Include="WebCompiler\JavaScriptOptions.cs" />
+    <Compile Include="WebCompiler\LessCompiler.cs" />
+    <Compile Include="WebCompiler\LessDependencyResolver.cs" />
+    <Compile Include="WebCompiler\LessOptions.cs" />
+    <Compile Include="WebCompiler\MinificationResult.cs" />
+    <Compile Include="WebCompiler\MinifyFileEventArgs.cs" />
+    <Compile Include="WebCompiler\Program.cs" />
+    <Compile Include="WebCompiler\SassCompiler.cs" />
+    <Compile Include="WebCompiler\SassDependencyResolver.cs" />
+    <Compile Include="WebCompiler\SassOptions.cs" />
+    <Compile Include="WebCompiler\SourceMapEventArgs.cs" />
+    <Compile Include="WebCompiler\StylusCompiler.cs" />
+    <Compile Include="WebCompiler\StylusOptions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Node.node_with_modules.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="build-nuget\build\BuildWebCompiler-none-elevated.targets">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="build-nuget\BuildWebCompiler-none-elevated.nuspec">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="build-nuget\nuget.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="dependences\Newtonsoft.Json.dll" />
+    <None Include="dependences\NUglify.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if not exist "$(TargetDir)build-nuget\tools\net45" mkdir "$(TargetDir)build-nuget\tools\net45"
+copy /Y "$(TargetDir)$(TargetFileName)" "$(TargetDir)build-nuget\tools\net45"
+copy /Y "$(TargetDir)Newtonsoft.Json.dll" "$(TargetDir)build-nuget\tools\net45\"
+copy /Y "$(TargetDir)NUglify.dll" "$(TargetDir)build-nuget\tools\net45\"
+"$(TargetDir)build-nuget\nuget.exe" pack "$(TargetDir)build-nuget\BuildWebCompiler-none-elevated.nuspec"</PostBuildEvent>
+  </PropertyGroup>
+</Project>

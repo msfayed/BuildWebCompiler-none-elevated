@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCompiler", "WebCompiler.csproj", "{7AC58B60-E066-4F58-8ACB-0662E92B0C05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F7EF804E-34C6-4CFD-92D1-850631A6CD1C}"
+	ProjectSection(SolutionItems) = preProject
+		readme.txt = readme.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7AC58B60-E066-4F58-8ACB-0662E92B0C05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AC58B60-E066-4F58-8ACB-0662E92B0C05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AC58B60-E066-4F58-8ACB-0662E92B0C05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AC58B60-E066-4F58-8ACB-0662E92B0C05}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
