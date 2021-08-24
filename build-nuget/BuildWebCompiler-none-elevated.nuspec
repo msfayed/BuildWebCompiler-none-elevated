@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>BuildWebCompiler-none-elevated</id>
-    <version>2021.08.23</version>
+    <version>2021.08.24</version>
     <title>Web Compiler - None Elevated</title>
     <authors>Mads Kristensen, Mohammed Fayed</authors>
     <owners>Mads Kristensen</owners>
