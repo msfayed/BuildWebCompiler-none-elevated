@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{7AC58B60-E066-4F58-8ACB-0662E92B0C05}</ProjectGuid>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -9,7 +9,7 @@
     <LangVersion>6</LangVersion>
     <AssemblyName>WebCompiler</AssemblyName>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <TargetFrameworkProfile />
@@ -31,6 +31,7 @@
     <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>dependences\Newtonsoft.Json.dll</HintPath>
@@ -41,11 +42,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Microsoft.Build.Utilities.Core" />
     <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LongPath\LongDirectory.cs" />
+    <Compile Include="LongPath\LongFile.cs" />
+    <Compile Include="LongPath\NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebCompiler\BabelCompiler.cs" />
     <Compile Include="WebCompiler\BabelOptions.cs" />
@@ -100,15 +104,19 @@
     <Content Include="build-nuget\nuget.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="app.config" />
     <None Include="dependences\Newtonsoft.Json.dll" />
     <None Include="dependences\NUglify.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if not exist "$(TargetDir)build-nuget\tools\net45" mkdir "$(TargetDir)build-nuget\tools\net45"
-copy /Y "$(TargetDir)$(TargetFileName)" "$(TargetDir)build-nuget\tools\net45"
-copy /Y "$(TargetDir)Newtonsoft.Json.dll" "$(TargetDir)build-nuget\tools\net45\"
-copy /Y "$(TargetDir)NUglify.dll" "$(TargetDir)build-nuget\tools\net45\"
+    <PostBuildEvent>if not exist "$(TargetDir)build-nuget\tools\net472" mkdir "$(TargetDir)build-nuget\tools\net472"
+if not exist "$(TargetDir)build-nuget\lib\net472" mkdir "$(TargetDir)build-nuget\lib\net472"
+copy nul "$(TargetDir)build-nuget\lib\net472\_._"
+copy /Y "$(TargetDir)$(TargetFileName)" "$(TargetDir)build-nuget\tools\net472\"
+copy /Y "$(TargetDir)$(TargetFileName).config" "$(TargetDir)build-nuget\tools\net472\"
+copy /Y "$(TargetDir)Newtonsoft.Json.dll" "$(TargetDir)build-nuget\tools\net472\"
+copy /Y "$(TargetDir)NUglify.dll" "$(TargetDir)build-nuget\tools\net472\"
 "$(TargetDir)build-nuget\nuget.exe" pack "$(TargetDir)build-nuget\BuildWebCompiler-none-elevated.nuspec"</PostBuildEvent>
   </PropertyGroup>
 </Project>

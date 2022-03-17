@@ -76,18 +76,48 @@ namespace WebCompiler
             _syncRoot.WaitOne();
             try
             {
-                if (!Directory.Exists(path) || !File.Exists(path2) || !File.Exists(path3))
+                if (!LongDirectory.Exists(path) || !LongFile.Exists(path2) || !LongFile.Exists(path3))
                 {
                     OnInitializing();
-                    if (Directory.Exists(_path))
+                    if (LongDirectory.Exists(_path))
                     {
-                        Directory.Delete(_path, true);
+                         LongDirectory.Delete(_path, true);
                     }
 
-                    Directory.CreateDirectory(_path);
-
+                    LongDirectory.CreateDirectory(_path);
                     SaveResourceFile(_path, "Node.node_with_modules.zip", "node_with_modules.zip");
-                    ZipFile.ExtractToDirectory(Path.Combine(_path, "node_with_modules.zip"), _path);
+
+                    var zipFilePath = Path.Combine(_path, "node_with_modules.zip");
+
+                    using (var archive = ZipFile.OpenRead(zipFilePath))
+                    {
+                        foreach (var entry in archive.Entries)
+                        {
+                            var fullEntryPath = Path.Combine(_path, entry.FullName.Replace("/","\\"));
+
+                            var dirPath = Path.GetDirectoryName(fullEntryPath);
+                            if (!LongDirectory.Exists(dirPath))
+                            {
+                                LongDirectory.CreateDirectory(dirPath);
+                            }
+
+                            if (Path.GetFileName(entry.FullName).Length != 0)
+                            {
+                                using (var fileHandle = LongFile.CreateFileForWrite(fullEntryPath))
+                                {
+                                    using (var destination = new FileStream(fileHandle, FileAccess.Write))
+                                    {
+                                        using (Stream stream = entry.Open())
+                                        {
+                                            stream.CopyTo(destination);
+                                        }
+                                    }
+                                }
+
+                            }
+
+                        }
+                    }
 
                     File.WriteAllText(path3, DateTime.Now.ToLongDateString());
 
