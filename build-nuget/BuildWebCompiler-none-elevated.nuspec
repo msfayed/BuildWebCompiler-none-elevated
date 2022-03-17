@@ -2,19 +2,24 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>BuildWebCompiler-none-elevated</id>
-    <version>2021.08.24</version>
+    <version>2022.3.17</version>
     <title>Web Compiler - None Elevated</title>
     <authors>Mads Kristensen, Mohammed Fayed</authors>
     <owners>Mads Kristensen</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">Apache-2.0</license>
-    <description>Compiles LESS, Sass, JSX and CoffeeScript files [ without elevated account ]</description>
-    <copyright>Copyright 2021</copyright>
+    <description>Compiles LESS, Sass, JSX and CoffeeScript files [ without elevated/Administrator account ]</description>
+    <copyright>Copyright 2022</copyright>
     <tags>LESS Sass Scss JSX EcmaScript6 CoffeeScript</tags>
     <repository type="git" url="https://github.com/msfayed/BuildWebCompiler-none-elevated" />
+	<dependencies>
+	    <group targetFramework="net472" />
+	</dependencies>
   </metadata>
   <files>
     <file src="build\**" target="build" />
     <file src="tools\**" target="tools" />
+	<file src="lib\**" target="lib" />
   </files>
+  
 </package>
